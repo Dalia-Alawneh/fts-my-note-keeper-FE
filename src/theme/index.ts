@@ -5,7 +5,7 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#8D77FF',
+      main: '#c5aefe',
     },
     secondary: {
       main: '#FFAF5F',
@@ -17,6 +17,10 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Roboto, sans-serif',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 400,
+    }
   },
   noteColors: {
     yellow: '#FFF59D',
