@@ -1,9 +1,9 @@
 import logo from "@/assets/logo2.png";
 import { Box, Typography } from "@mui/material";
-import CustomAppBar from "../AppBar";
+import CustomAppBar from "../Shared/AppBar";
 const Header = () => {
   return (
-    <CustomAppBar >
+    <CustomAppBar>
       <Box
         component="header"
         display="flex"
