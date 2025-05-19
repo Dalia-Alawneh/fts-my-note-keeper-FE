@@ -4,6 +4,9 @@ import Typography from '@mui/material/Typography';
 import CustomIconButton from '../ui/IconButton/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { Theme } from '@mui/material/styles';
+import { Box, Tooltip } from '@mui/material';
+import { CalendarMonth } from '@mui/icons-material';
+import formatDate from '@/utils/formatDate';
 
 const cardStyles = (theme: Theme) => ({
   position: 'relative',
@@ -29,6 +32,7 @@ interface INoteCardProps {
   note: {
     title: string;
     content: string;
+    createdAt: string;
   }
 }
 export default function NoteCard({ note }: INoteCardProps) {
@@ -36,7 +40,8 @@ export default function NoteCard({ note }: INoteCardProps) {
   return (
     <Card sx={(theme: Theme) => cardStyles(theme)}>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom pb={1}
+          variant="h5" component="div" borderBottom='1px solid grey'>
           {note.title}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -48,6 +53,12 @@ export default function NoteCard({ note }: INoteCardProps) {
         sx={iconButtonStyles}>
         <DeleteIcon color='error' />
       </CustomIconButton>
+      <Box display={'flex'} alignItems='center' gap={2} my={2} px={2}>
+        <Tooltip title="Created At">
+          <CalendarMonth style={{ cursor: 'pointer' }} color='action' />
+        </Tooltip>
+        <Typography variant='body2'>{formatDate(note.createdAt)}</Typography>
+      </Box>
     </Card>
   );
 }
