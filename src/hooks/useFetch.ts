@@ -32,7 +32,7 @@ export function useFetch<T>(endpoint: string, options: RequestInit = {}) {
     return () => {
       isMounted = false;
     };
-  }, [endpoint, options]);
+  }, [endpoint, JSON.stringify(options)]);
 
   return { data, error, loading };
 }
