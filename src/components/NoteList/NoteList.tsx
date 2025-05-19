@@ -1,11 +1,19 @@
-import { Box } from "@mui/material"
+import Grid from '@mui/material/Grid';
 import NoteCard from "../NoteCard/NoteCard"
+import { useFetch } from "@/hooks/useFetch"
 
 const NoteList = () => {
+  const { data, error, loading } = useFetch('/notes')
+
   return (
-    <Box my={20}>
-      <NoteCard/>
-    </Box>
+    <Grid container spacing={2} mt={20} display='flex' justifyContent='center'>
+      {data?.notes?.map((note) => (
+        <Grid item key={note._id}
+          size={{ xs: 12, md: 3 }} md={4}>
+          <NoteCard note={note} />
+        </Grid>
+      ))}
+    </Grid>
   )
 }
 

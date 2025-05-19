@@ -1,6 +1,6 @@
 import logo from "@/assets/logo2.png";
 import { Box, Typography } from "@mui/material";
-import CustomAppBar from "../Shared/AppBar";
+import CustomAppBar from "../AppBar";
 const Header = () => {
   return (
     <CustomAppBar>
