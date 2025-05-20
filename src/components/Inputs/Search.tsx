@@ -48,6 +48,7 @@ interface ISearchInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }
+
 const SearchInput = ({ value, onChange }: ISearchInputProps) => {
   return (
     <Search>
