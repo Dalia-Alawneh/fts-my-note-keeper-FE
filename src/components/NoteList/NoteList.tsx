@@ -3,9 +3,20 @@ import NoteCard from "../NoteCard/NoteCard"
 import { useFetch } from "@/hooks/useFetch"
 import type { NoteResponse } from '@/types';
 import { Alert, Skeleton, Typography } from '@mui/material';
+import { useMemo } from 'react';
 
-const NoteList = () => {
+interface INoteListProps {
+  search: string;
+}
+const NoteList = ({ search }: INoteListProps) => {
   const { data, error, loading } = useFetch<NoteResponse>('/notes')
+
+  const filteredNotes = useMemo(() => {
+    return data?.notes?.filter(note =>
+      (note?.title ?? '').toLowerCase().includes((search ?? '').toLowerCase()) ||
+      (note?.content ?? '').toLowerCase().includes((search ?? '').toLowerCase())
+    ) ?? [];
+  }, [data, search]);
 
   return (
     <Grid container spacing={2} mt={20} display='flex' justifyContent='center'>
@@ -23,9 +34,9 @@ const NoteList = () => {
             </Alert>
           </Grid>
         ) :
-          (!data || data.notes.length === 0) ?
-            <Typography>No data found</Typography>
-            : data?.notes.map((note) => (
+          (filteredNotes.length === 0) ?
+            <Typography mt={5}>No data found</Typography>
+            : filteredNotes?.map((note) => (
               <Grid key={note._id} size={{ xs: 12, sm: 4 }}>
                 <NoteCard note={note} />
               </Grid>
