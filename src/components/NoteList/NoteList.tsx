@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import NoteCard from "../NoteCard/NoteCard"
 import { useFetch } from "@/hooks/useFetch"
 import type { NoteResponse } from '@/types';
-import { Skeleton, Typography } from '@mui/material';
+import { Alert, Skeleton, Typography } from '@mui/material';
 
 const NoteList = () => {
   const { data, error, loading } = useFetch<NoteResponse>('/notes')
@@ -10,18 +10,23 @@ const NoteList = () => {
   return (
     <Grid container spacing={2} mt={20} display='flex' justifyContent='center'>
       {
-        !loading ? (
+        loading ? (
           Array.from({ length: 3 }).map((_, idx) => (
-            <Grid item xs={12} md={4} key={idx}>
-              <Skeleton variant="rectangular" width="100%" height={231} />
+            <Grid size={{ xs: 12, sm: 6 }} key={idx}>
+              <Skeleton variant="rectangular" sx={{ borderRadius: "10px" }} width="100%" height={200} />
             </Grid>
           ))
+        ) : error ? (
+          <Grid size={12}>
+            <Alert severity="error">
+              An Error occurred {error.message || "Please try again!"}
+            </Alert>
+          </Grid>
         ) :
-
           (!data || data.notes.length === 0) ?
             <Typography>No data found</Typography>
             : data?.notes.map((note) => (
-              <Grid item key={note._id} xs={12} md={4}>
+              <Grid key={note._id} size={{ xs: 12, sm: 6 }}>
                 <NoteCard note={note} />
               </Grid>
             ))}
