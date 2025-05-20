@@ -26,7 +26,7 @@ const NoteList = () => {
           (!data || data.notes.length === 0) ?
             <Typography>No data found</Typography>
             : data?.notes.map((note) => (
-              <Grid key={note._id} size={{ xs: 12, sm: 6 }}>
+              <Grid key={note._id} size={{ xs: 12, sm: 4 }}>
                 <NoteCard note={note} />
               </Grid>
             ))}
