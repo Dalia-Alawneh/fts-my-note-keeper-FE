@@ -3,6 +3,7 @@ export type Note = {
   title: string;
   content: string;
   createdAt: string;
+  color?: string;
 }
 
 export type NoteResponse = {

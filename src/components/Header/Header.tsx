@@ -1,7 +1,7 @@
 import logo from "@/assets/logo2.png";
 import { Box, Typography } from "@mui/material";
 import CustomAppBar from "../AppBar";
-import SearchInput from "../ui/Inputs/Search/Search";
+import SearchInput from "../Inputs/Search";
 import type { ChangeEvent } from "react";
 interface IHeaderProps {
   search: string;
