@@ -7,6 +7,7 @@ import type { Theme } from '@mui/material/styles';
 import { Box, Tooltip } from '@mui/material';
 import { CalendarMonth } from '@mui/icons-material';
 import formatDate from '@/utils/formatDate';
+import type { Note } from '@/types';
 
 const cardStyles = (theme: Theme) => ({
   position: 'relative',
@@ -29,11 +30,7 @@ const iconButtonStyles = {
 };
 
 interface INoteCardProps {
-  note: {
-    title: string;
-    content: string;
-    createdAt: string;
-  }
+  note: Note,
 }
 export default function NoteCard({ note }: INoteCardProps) {
 
