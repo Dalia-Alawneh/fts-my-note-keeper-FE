@@ -1,37 +1,56 @@
-import { MenuItem, Select, FormControl, InputLabel, Box } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Box,
+  type SelectProps,
+  FormHelperText,
+} from "@mui/material";
 
-interface ColorSelectProps {
-  value: string;
-  onChange: (value: string) => void;
+type ColorSelectProps = SelectProps & {
   colors: { [key: string]: string };
   label?: string;
+  error?: boolean;
+  helperText?: string;
 }
 
-const ColorSelect = ({ value, onChange, colors, label = "Color" }: ColorSelectProps) => (
-  <FormControl fullWidth>
+const ColorSelect = ({
+  value,
+  onChange,
+  onBlur,
+  colors,
+  label = "Color",
+  name,
+  error,
+  helperText,
+  ...rest
+}: ColorSelectProps) => (
+  <FormControl fullWidth margin="normal" error={error}>
     <InputLabel>{label}</InputLabel>
     <Select
       label={label}
+      name={name}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={onChange}
+      onBlur={onBlur}
+      {...rest}
     >
       {Object.entries(colors).map(([name, hex]) => (
-        <MenuItem key={name} value={name}>
+        <MenuItem key={name} value={hex}>
           <Box display="flex" alignItems="center">
-            <Box
-              sx={{
-                width: 16,
-                height: 16,
-                borderRadius: "50%",
-                backgroundColor: hex,
-                mr: 1,
-              }}
+            <Box width="16px"
+              height="16px"
+              borderRadius="50%"
+              bgcolor={hex}
+              mr='0.5rem'
             />
             {name}
           </Box>
         </MenuItem>
       ))}
     </Select>
+    {helperText && <FormHelperText>{helperText}</FormHelperText>}
   </FormControl>
 );
 
