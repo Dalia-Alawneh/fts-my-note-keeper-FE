@@ -22,8 +22,8 @@ const NoteList = ({ search }: INoteListProps) => {
     <Grid container spacing={2} mt={20} display='flex' justifyContent='center'>
       {
         loading ? (
-          Array.from({ length: 3 }).map((_, idx) => (
-            <Grid size={{ xs: 12, sm: 6 }} key={idx}>
+          Array.from({ length: 5 }).map((_, idx) => (
+            <Grid size={{ xs: 12, sm: 4 }} key={idx}>
               <Skeleton variant="rectangular" sx={{ borderRadius: "10px" }} width="100%" height={200} />
             </Grid>
           ))
