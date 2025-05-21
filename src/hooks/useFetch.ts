@@ -1,36 +1,40 @@
 import { Fetch } from '@/api';
-import { useEffect, useState } from 'react';
-
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 export function useFetch<T>(endpoint: string, options: RequestInit = {}) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
+  const controllerRef = useRef<AbortController | null>(null);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    controllerRef.current?.abort();
+    const controller = new AbortController();
+    controllerRef.current = controller;
+
+    try {
+      const res = await Fetch<T>(endpoint, {
+        ...options,
+        signal: controller.signal,
+      });
+      setData(res);
+      setError(null);
+    } catch (err) {
+      setError(err as Error);
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [endpoint, JSON.stringify(options)]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const fetchData = async () => {
-      try {
-        const res = await Fetch<T>(endpoint, {
-          ...options,
-          signal: controller.signal,
-        });
-        setData(res);
-        setError(null);
-      } catch (err) {
-        setError(err as Error);
-        setData(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
 
     return () => {
-      controller.abort();
+      controllerRef.current?.abort();
     };
-  }, [endpoint, JSON.stringify(options)]);
+  }, [fetchData]);
 
-  return { data, error, loading };
+  return { data, error, loading, refetch: fetchData };
 }
