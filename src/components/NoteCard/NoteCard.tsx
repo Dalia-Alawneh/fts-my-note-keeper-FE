@@ -37,6 +37,7 @@ const iconButtonStyles = {
 interface INoteCardProps {
   note: Note,
 }
+
 export default function NoteCard({ note }: INoteCardProps) {
 
   return (
