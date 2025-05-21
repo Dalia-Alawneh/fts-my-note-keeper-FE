@@ -23,12 +23,12 @@ function AppDialogComponent({ open, handleClose, children, ...rest }: IAppDialog
   );
 }
 
-const Title = ({ title }: { title: string }) => (
-  <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+const Title = ({ children }: { children: ReactNode }) => (
+  <DialogTitle id="alert-dialog-title">{children}</DialogTitle>
 )
 
-const Content = ({ content }: { content: ReactNode }) => (
-  <DialogContent id="alert-dialog-title">{content}</DialogContent>
+const Content = ({ children }: { children: ReactNode }) => (
+  <DialogContent id="alert-dialog-title">{children}</DialogContent>
 )
 
 const Actions = ({ actions }: { actions: ReactNode }) => (

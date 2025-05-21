@@ -7,9 +7,7 @@ interface HoverIconButtonProps extends IconButtonProps {
 
 const CustomIconButton = ({ children, ...rest }: HoverIconButtonProps) => {
   return (
-    <IconButton
-      {...rest}
-    >
+    <IconButton {...rest}>
       {children}
     </IconButton>
   );
