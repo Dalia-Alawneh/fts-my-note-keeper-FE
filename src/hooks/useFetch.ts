@@ -8,29 +8,27 @@ export function useFetch<T>(endpoint: string, options: RequestInit = {}) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
-
+    const controller = new AbortController();
     const fetchData = async () => {
       try {
-        const res = await Fetch<T>(endpoint, options);
-        if (isMounted) {
-          setData(res);
-          setError(null);
-        }
+        const res = await Fetch<T>(endpoint, {
+          ...options,
+          signal: controller.signal,
+        });
+        setData(res);
+        setError(null);
       } catch (err) {
-        if (isMounted) {
-          setError(err as Error);
-          setData(null);
-        }
+        setError(err as Error);
+        setData(null);
       } finally {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       }
     };
 
     fetchData();
 
     return () => {
-      isMounted = false;
+      controller.abort();
     };
   }, [endpoint, JSON.stringify(options)]);
 
