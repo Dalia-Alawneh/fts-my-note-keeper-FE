@@ -8,10 +8,10 @@ export function useFetch<T>(endpoint: string, options: RequestInit = {}) {
   const controllerRef = useRef<AbortController | null>(null);
 
   const fetchData = useCallback(async () => {
-    setLoading(true);
-    controllerRef.current?.abort();
+
     const controller = new AbortController();
     controllerRef.current = controller;
+    setLoading(true);
 
     try {
       const res = await Fetch<T>(endpoint, {
@@ -21,7 +21,17 @@ export function useFetch<T>(endpoint: string, options: RequestInit = {}) {
       setData(res);
       setError(null);
     } catch (err) {
-      setError(err as Error);
+      console.log(err);
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        return;
+      }
+
+      if (err instanceof Error) {
+        setError(err);
+      } else {
+        setError(new Error('An unknown error occurred'));
+      }
+
       setData(null);
     } finally {
       setLoading(false);
