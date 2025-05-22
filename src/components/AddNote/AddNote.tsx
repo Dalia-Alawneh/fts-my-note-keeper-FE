@@ -129,8 +129,6 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
         )}
       />
 
-
-
       {!expanded && (
         <Box sx={{ color: "text.secondary", px: 1 }}>
           Take a note...
