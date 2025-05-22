@@ -1,3 +1,4 @@
+import AddNote from "@/components/AddNote/AddNote";
 import Header from "@/components/Header"
 import NoteList from "@/components/NoteList/NoteList"
 import { useFetch } from "@/hooks/useFetch";
@@ -23,6 +24,7 @@ const Home = () => {
   return (
     <Container maxWidth="xl">
       <Header search={search} onSearchChange={onSearchChange} />
+      <AddNote onNoteCreate={refetch} />
       {loading ? (
         <Grid container spacing={2} mt={20} justifyContent="center">
           {Array.from({ length: 5 }).map((_, idx) => (

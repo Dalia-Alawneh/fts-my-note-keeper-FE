@@ -8,7 +8,7 @@ interface INoteListProps {
 
 const NoteList = ({ notes, onNotesUpdate }: INoteListProps) => {
   return (
-    <Grid container spacing={2} mt={20} display='flex' justifyContent='center'>
+    <Grid container spacing={2} mt={10} display='flex' justifyContent='center'>
       {notes?.map((note) => (
         <Grid key={note._id} size={{ xs: 12, sm: 4 }}>
           <NoteCard note={note} onNotesUpdate={onNotesUpdate} />

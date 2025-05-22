@@ -12,29 +12,29 @@ interface IUpdateNoteDialogProps {
 }
 const UpdateNoteDialog = ({ open, handleClose, note, onNotesUpdate }: IUpdateNoteDialogProps) => {
   const { put, loading } = usePUT<NoteRequestPayload, NoteResponse>(`/notes/${note._id}`);
-  
-const handleSubmit = async (
-  data: NoteRequestPayload,
-  formikHelpers: { setFieldError: (field: string, message: string) => void }
-) => {
-  try {
-    const result = await put(data);
-    if (result) {
-      await onNotesUpdate();
-      toast.success("Note updated successfully");
-      handleClose();
+
+  const handleSubmit = async (
+    data: NoteRequestPayload,
+    formikHelpers: { setFieldError: (field: string, message: string) => void }
+  ) => {
+    try {
+      const result = await put(data);
+      if (result) {
+        await onNotesUpdate();
+        toast.success("Note updated successfully");
+        handleClose();
+      }
+    } catch (error) {
+      const err = error as { fieldErrors?: Record<string, string>; message?: string };
+      if (err.fieldErrors) {
+        Object.entries(err.fieldErrors).forEach(([field, msg]) => {
+          formikHelpers.setFieldError(field, msg);
+        });
+      } else {
+        toast.error(err.message || "Failed to update note");
+      }
     }
-  } catch (error) {    
-    const err = error as { fieldErrors?: Record<string, string>; message?: string };
-    if (err.fieldErrors) {
-      Object.entries(err.fieldErrors).forEach(([field, msg]) => {
-        formikHelpers.setFieldError(field, msg);
-      });
-    } else {
-      toast.error(err.message || "Failed to update note");
-    }
-  }
-};
+  };
 
   const initialValues: NoteRequestPayload = {
     title: note.title,

@@ -17,6 +17,7 @@ const cardStyles = (color?: string): SxProps<Theme> => () => ({
   boxShadow: '0 0 8px 5px rgba(238, 238, 238, 0.29)',
   backgroundColor: color,
   p: '10px',
+  cursor: "pointer",
   borderRadius: '12px',
   transition: 'box-shadow 0.3s ease',
   '&:hover': {
