@@ -38,7 +38,7 @@ const Home = () => {
           An error occurred: {error.message || "Please try again!"}
         </Alert>
       ) : (
-        <NoteList notes={filteredNotes} onNotesUpdate={refetch} />
+        <NoteList notes={filteredNotes} refetchNotes={refetch} />
       )}
     </Container>
   )

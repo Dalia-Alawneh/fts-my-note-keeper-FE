@@ -11,6 +11,9 @@ import type { Note } from '@/types';
 import Grow from '@mui/material/Grow';
 import UpdateNoteDialog from '../UpdateNotesDialog/UpdateNotesDialog';
 import { useState } from 'react';
+import ConfirmDialog from '../ConfirmDeleteDialog';
+import { useDelete } from '@/hooks/useDelete';
+import toast from 'react-hot-toast';
 
 const cardStyles = (color?: string): SxProps<Theme> => () => ({
   position: 'relative',
@@ -39,18 +42,35 @@ const iconButtonStyles = {
 
 interface INoteCardProps {
   note: Note;
-  onNotesUpdate: () => Promise<void>
+  refetchNotes: () => Promise<void>
 }
 
-export default function NoteCard({ note, onNotesUpdate }: INoteCardProps) {
-  const [open, setOpen] = useState(false);
+export default function NoteCard({ note, refetchNotes }: INoteCardProps) {
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const { destroy, loading } = useDelete("/notes");
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpenUpdate = () => setIsUpdateOpen(true);
+  const handleCloseUpdate = () => setIsUpdateOpen(false);
+
+  const handleOpenDeleteConfirm = () => setIsDeleteConfirmOpen(true);
+  const handleCloseDeleteConfirm = () => setIsDeleteConfirmOpen(false);
+
+  const handleDelete = async () => {
+    try {
+      await destroy(note._id);
+      toast.success("Note deleted");
+      handleCloseDeleteConfirm();
+      refetchNotes();
+    } catch (err) {
+      toast.error("Failed to delete note");
+      console.error(err);
+    }
+  };
 
   return (
     <>
-      <Grow in timeout={200} onClick={handleOpen} >
+      <Grow in timeout={200} onClick={handleOpenUpdate} >
         <Card sx={cardStyles(note.color)}>
           <CardContent>
             <Typography gutterBottom pb={1}
@@ -63,6 +83,10 @@ export default function NoteCard({ note, onNotesUpdate }: INoteCardProps) {
           </CardContent>
           <CustomIconButton aria-label="delete"
             className="hover-icon-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleOpenDeleteConfirm();
+            }}
             sx={iconButtonStyles}>
             <DeleteIcon color='error' />
           </CustomIconButton>
@@ -73,12 +97,18 @@ export default function NoteCard({ note, onNotesUpdate }: INoteCardProps) {
             <Typography variant='body2'>{formatDate(note.createdAt)}</Typography>
           </Box>
         </Card>
-      </Grow>
+      </Grow >
       <UpdateNoteDialog
-        handleClose={handleClose}
+        handleClose={handleCloseUpdate}
         note={note}
-        open={open}
-        onNotesUpdate={onNotesUpdate}
+        open={isUpdateOpen}
+        onNotesUpdate={refetchNotes}
+      />
+      <ConfirmDialog
+        handleClose={handleCloseDeleteConfirm}
+        open={isDeleteConfirmOpen}
+        onConfirmDelete={handleDelete}
+        loading={loading}
       />
     </>
   );
