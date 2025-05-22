@@ -1,6 +1,5 @@
 import Header from "@/components/Header"
 import NoteList from "@/components/NoteList/NoteList"
-import UpdateNotesDialog from "@/components/UpdateNotesDialog/UpdateNotesDialog";
 import { useFetch } from "@/hooks/useFetch";
 import type { NoteResponse } from "@/types";
 import { Alert, Container, Grid, Skeleton } from "@mui/material"
@@ -8,7 +7,7 @@ import { useMemo, useState, type ChangeEvent } from "react";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const { data, loading, error } = useFetch<NoteResponse>("/notes");
+  const { data, loading, error, refetch } = useFetch<NoteResponse>("/notes");
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -37,7 +36,7 @@ const Home = () => {
           An error occurred: {error.message || "Please try again!"}
         </Alert>
       ) : (
-        <NoteList notes={filteredNotes} />
+        <NoteList notes={filteredNotes} onNotesUpdate={refetch} />
       )}
     </Container>
   )

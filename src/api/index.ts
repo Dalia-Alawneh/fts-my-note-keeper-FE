@@ -14,10 +14,11 @@ export const Fetch = async <T = unknown>(
     headers,
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error(error?.message || 'Something went wrong');
+    throw data;
   }
 
-  return response.json();
+  return data;
 };

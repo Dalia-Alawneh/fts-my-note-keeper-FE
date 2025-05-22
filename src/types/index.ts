@@ -9,3 +9,10 @@ export type Note = {
 export type NoteResponse = {
   notes: Note[]
 }
+
+export type NoteRequestPayload = Omit<Note, '_id' | 'createdAt'>
+
+export interface ApiValidationError {
+  message: string;
+  fieldErrors?: Record<string, string>;
+}

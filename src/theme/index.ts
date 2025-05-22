@@ -30,6 +30,7 @@ const theme = createTheme({
     blue: '#90CAF9',
     purple: '#CE93D8',
     orange: '#FFCC80',
+    grey: '#D3D3D3'
   }
 });
 

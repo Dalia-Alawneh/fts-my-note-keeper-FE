@@ -9,6 +9,8 @@ import { CalendarMonth } from '@mui/icons-material';
 import formatDate from '@/utils/formatDate';
 import type { Note } from '@/types';
 import Grow from '@mui/material/Grow';
+import UpdateNoteDialog from '../UpdateNotesDialog/UpdateNotesDialog';
+import { useState } from 'react';
 
 const cardStyles = (color?: string): SxProps<Theme> => () => ({
   position: 'relative',
@@ -35,35 +37,48 @@ const iconButtonStyles = {
 };
 
 interface INoteCardProps {
-  note: Note,
+  note: Note;
+  onNotesUpdate: () => Promise<void>
 }
 
-export default function NoteCard({ note }: INoteCardProps) {
+export default function NoteCard({ note, onNotesUpdate }: INoteCardProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <Grow in timeout={200}>
-      <Card sx={cardStyles(note.color)}>
-        <CardContent>
-          <Typography gutterBottom pb={1}
-            variant="h5" component="div" borderBottom='1px solid grey'>
-            {note.title}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {note.content}
-          </Typography>
-        </CardContent>
-        <CustomIconButton aria-label="delete"
-          className="hover-icon-btn"
-          sx={iconButtonStyles}>
-          <DeleteIcon color='error' />
-        </CustomIconButton>
-        <Box display={'flex'} alignItems='center' gap={2} my={2} px={2}>
-          <Tooltip title="Created At">
-            <CalendarMonth style={{ cursor: 'pointer' }} color='action' />
-          </Tooltip>
-          <Typography variant='body2'>{formatDate(note.createdAt)}</Typography>
-        </Box>
-      </Card>
-    </Grow>
+    <>
+      <Grow in timeout={200} onClick={handleOpen} >
+        <Card sx={cardStyles(note.color)}>
+          <CardContent>
+            <Typography gutterBottom pb={1}
+              variant="h5" component="div" borderBottom='1px solid grey'>
+              {note.title}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {note.content}
+            </Typography>
+          </CardContent>
+          <CustomIconButton aria-label="delete"
+            className="hover-icon-btn"
+            sx={iconButtonStyles}>
+            <DeleteIcon color='error' />
+          </CustomIconButton>
+          <Box display={'flex'} alignItems='center' gap={2} my={2} px={2}>
+            <Tooltip title="Created At">
+              <CalendarMonth style={{ cursor: 'pointer' }} color='action' />
+            </Tooltip>
+            <Typography variant='body2'>{formatDate(note.createdAt)}</Typography>
+          </Box>
+        </Card>
+      </Grow>
+      <UpdateNoteDialog
+        handleClose={handleClose}
+        note={note}
+        open={open}
+        onNotesUpdate={onNotesUpdate}
+      />
+    </>
   );
 }
