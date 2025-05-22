@@ -31,8 +31,8 @@ const Content = ({ children }: { children: ReactNode }) => (
   <DialogContent id="alert-dialog-title">{children}</DialogContent>
 )
 
-const Actions = ({ actions }: { actions: ReactNode }) => (
-  <DialogActions id="alert-dialog-title">{actions}</DialogActions>
+const Actions = ({ children }: { children: ReactNode }) => (
+  <DialogActions id="alert-dialog-title">{children}</DialogActions>
 )
 
 

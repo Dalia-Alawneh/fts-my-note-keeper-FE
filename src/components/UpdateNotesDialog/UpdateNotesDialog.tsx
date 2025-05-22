@@ -1,8 +1,11 @@
-import type { Note, NoteRequestPayload, NoteResponse } from "@/types";
+import type { Note, NoteFormValues, NoteRequestPayload, NoteResponse } from "@/types";
 import AppDialog from "../Dialog"
 import NoteForm from "../NoteForm";
 import { usePUT } from "@/hooks/usePut";
 import toast from "react-hot-toast";
+import ColorSelect from "../ColorSelect";
+import { noteColors } from "@/fixtures";
+import { Button, TextField } from "@mui/material";
 
 interface IUpdateNoteDialogProps {
   open: boolean;
@@ -36,7 +39,7 @@ const UpdateNoteDialog = ({ open, handleClose, note, onNotesUpdate }: IUpdateNot
     }
   };
 
-  const initialValues: NoteRequestPayload = {
+  const initialValues: NoteFormValues = {
     title: note.title,
     content: note.content,
     color: note.color,
@@ -49,7 +52,54 @@ const UpdateNoteDialog = ({ open, handleClose, note, onNotesUpdate }: IUpdateNot
       <AppDialog.Content>
         <NoteForm initialValues={initialValues}
           onSubmit={handleSubmit}
-          isLoading={loading} />
+          render={(formik) => (
+            <>
+              <TextField
+                fullWidth
+                id="title"
+                name="title"
+                label="Title"
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.errors.title)}
+                helperText={formik.errors.title}
+                margin="normal"
+              />
+
+              <TextField
+                fullWidth
+                id="content"
+                name="content"
+                label="Content"
+                value={formik.values.content}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={Boolean(formik.errors.content)}
+                helperText={formik.errors.content}
+                margin="normal"
+              />
+
+              <ColorSelect colors={noteColors} labelId="color-label"
+                id="color"
+                name="color"
+                value={formik.values.color}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.color && Boolean(formik.errors.color)}
+                label="Color" />
+              <AppDialog.Actions>
+                <Button color="primary" variant="contained"
+                  fullWidth type="submit"
+                  loading={loading}
+                  sx={{ mt: 2 }}
+                >
+                  Save
+                </Button>
+              </AppDialog.Actions>
+            </>
+          )}
+        />
       </AppDialog.Content>
     </AppDialog>
   )

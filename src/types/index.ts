@@ -3,7 +3,7 @@ export type Note = {
   title: string;
   content: string;
   createdAt: string;
-  color?: string;
+  color: string;
 }
 
 export type NoteResponse = {
@@ -16,3 +16,5 @@ export interface ApiValidationError {
   message: string;
   fieldErrors?: Record<string, string>;
 }
+
+export type NoteFormValues = Required<Pick<NoteRequestPayload, "title" | "content" | "color">>;
