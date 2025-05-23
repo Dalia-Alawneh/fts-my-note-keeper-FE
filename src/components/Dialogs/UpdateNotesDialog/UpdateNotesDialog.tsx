@@ -1,11 +1,11 @@
-import type { Note, NoteFormValues, NoteRequestPayload, NoteResponse } from "@/types";
-import AppDialog from "../Dialog"
-import NoteForm from "../NoteForm";
-import { usePUT } from "@/hooks/usePut";
-import toast from "react-hot-toast";
-import ColorSelect from "../ColorSelect";
-import { noteColors } from "@/fixtures";
-import { Button, TextField } from "@mui/material";
+import type { Note, NoteFormValues, NoteRequestPayload, NoteResponse } from '@/types';
+import AppDialog from '../Dialog';
+import NoteForm from '../../NoteForm';
+import { usePUT } from '@/hooks/usePut';
+import toast from 'react-hot-toast';
+import ColorSelect from '../../ColorSelect';
+import { noteColors } from '@/fixtures';
+import { Button, TextField } from '@mui/material';
 
 interface IUpdateNoteDialogProps {
   open: boolean;
@@ -18,13 +18,13 @@ const UpdateNoteDialog = ({ open, handleClose, note, onNotesUpdate }: IUpdateNot
 
   const handleSubmit = async (
     data: NoteRequestPayload,
-    formikHelpers: { setFieldError: (field: string, message: string) => void }
+    formikHelpers: { setFieldError: (field: string, message: string) => void },
   ) => {
     try {
       const result = await put(data);
       if (result) {
         await onNotesUpdate();
-        toast.success("Note updated successfully");
+        toast.success('Note updated successfully');
         handleClose();
       }
     } catch (error) {
@@ -34,7 +34,7 @@ const UpdateNoteDialog = ({ open, handleClose, note, onNotesUpdate }: IUpdateNot
           formikHelpers.setFieldError(field, msg);
         });
       } else {
-        toast.error(err.message || "Failed to update note");
+        toast.error(err.message || 'Failed to update note');
       }
     }
   };
@@ -46,63 +46,68 @@ const UpdateNoteDialog = ({ open, handleClose, note, onNotesUpdate }: IUpdateNot
   };
   return (
     <AppDialog open={open} handleClose={handleClose}>
-      <AppDialog.Title>
-        Update Note
-      </AppDialog.Title>
+      <AppDialog.Title>Update Note</AppDialog.Title>
       <AppDialog.Content>
-        <NoteForm initialValues={initialValues}
+        <NoteForm
+          initialValues={initialValues}
           onSubmit={handleSubmit}
           render={(formik) => (
-            <>
+            <form onSubmit={formik.handleSubmit} noValidate>
               <TextField
                 fullWidth
-                id="title"
-                name="title"
-                label="Title"
+                id='title'
+                name='title'
+                label='Title'
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={Boolean(formik.errors.title)}
                 helperText={formik.errors.title}
-                margin="normal"
+                margin='normal'
               />
 
               <TextField
                 fullWidth
-                id="content"
-                name="content"
-                label="Content"
+                id='content'
+                name='content'
+                label='Content'
                 value={formik.values.content}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={Boolean(formik.errors.content)}
                 helperText={formik.errors.content}
-                margin="normal"
+                margin='normal'
               />
 
-              <ColorSelect colors={noteColors} labelId="color-label"
-                id="color"
-                name="color"
+              <ColorSelect
+                colors={noteColors}
+                labelId='color-label'
+                id='color'
+                name='color'
                 value={formik.values.color}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.color && Boolean(formik.errors.color)}
-                label="Color" />
+                label='Color'
+              />
               <AppDialog.Actions>
-                <Button color="primary" variant="contained"
-                  fullWidth type="submit"
+                <Button
+                  color='primary'
+                  variant='contained'
+                  fullWidth
+                  type='submit'
                   loading={loading}
                   sx={{ mt: 2 }}
                 >
                   Save
                 </Button>
               </AppDialog.Actions>
-            </>
+            </form>
           )}
         />
       </AppDialog.Content>
     </AppDialog>
-  )
-}
+  );
+};
 
-export default UpdateNoteDialog
+export default UpdateNoteDialog;

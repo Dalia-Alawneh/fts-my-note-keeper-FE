@@ -8,33 +8,27 @@ import { type ReactNode } from 'react';
 interface IAppDialogProps extends DialogProps {
   open: boolean;
   handleClose: () => void;
-  children: ReactNode
+  children: ReactNode;
 }
 function AppDialogComponent({ open, handleClose, children, ...rest }: IAppDialogProps) {
-
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      {...rest}
-    >
+    <Dialog open={open} onClose={handleClose} {...rest}>
       {children}
     </Dialog>
   );
 }
 
 const Title = ({ children }: { children: ReactNode }) => (
-  <DialogTitle id="alert-dialog-title">{children}</DialogTitle>
-)
+  <DialogTitle id='alert-dialog-title'>{children}</DialogTitle>
+);
 
 const Content = ({ children }: { children: ReactNode }) => (
-  <DialogContent id="alert-dialog-title">{children}</DialogContent>
-)
+  <DialogContent id='alert-dialog-title'>{children}</DialogContent>
+);
 
 const Actions = ({ children }: { children: ReactNode }) => (
-  <DialogActions id="alert-dialog-title">{children}</DialogActions>
-)
-
+  <DialogActions id='alert-dialog-title'>{children}</DialogActions>
+);
 
 AppDialogComponent.Title = Title;
 AppDialogComponent.Content = Content;
@@ -47,4 +41,4 @@ interface ICompoundAppDialog extends React.FC<IAppDialogProps> {
 }
 const AppDialog = AppDialogComponent as ICompoundAppDialog;
 
-export default AppDialog
+export default AppDialog;

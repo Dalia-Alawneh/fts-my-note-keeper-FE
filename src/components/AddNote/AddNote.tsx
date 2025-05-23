@@ -1,21 +1,21 @@
-import { Box, Button, Collapse, Paper, TextField } from "@mui/material";
-import { useState } from "react";
-import ColorSelect from "../ColorSelect";
-import { noteColors } from "@/fixtures";
-import { usePost } from "@/hooks/usePost";
-import type { NoteFormValues, NoteRequestPayload } from "@/types";
-import toast from "react-hot-toast";
-import NoteForm from "../NoteForm";
+import { Box, Button, Collapse, Paper, TextField } from '@mui/material';
+import { useState } from 'react';
+import ColorSelect from '../ColorSelect';
+import { noteColors } from '@/fixtures';
+import { usePost } from '@/hooks/usePost';
+import type { NoteFormValues, NoteRequestPayload } from '@/types';
+import toast from 'react-hot-toast';
+import NoteForm from '../NoteForm';
 
 interface IAddNoteProps {
-  onNoteCreate: () => Promise<void>
+  onNoteCreate: () => Promise<void>;
 }
 const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
   const [expanded, setExpanded] = useState(false);
-  const { post } = usePost<NoteRequestPayload>("/notes");
-  const initialValues: NoteRequestPayload = {
-    title: "",
-    content: "",
+  const { post, loading } = usePost<NoteRequestPayload>('/notes');
+  const initialValues: NoteFormValues = {
+    title: '',
+    content: '',
     color: noteColors.grey,
   };
 
@@ -24,12 +24,12 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
     formikHelpers: {
       resetForm: () => void;
       setFieldError: (field: string, message: string) => void;
-    }
+    },
   ) => {
     try {
       const result = await post(data);
       if (result) {
-        toast.success("Note added successfully");
+        toast.success('Note added successfully');
         formikHelpers.resetForm();
         await onNoteCreate();
         setExpanded(false);
@@ -41,39 +41,37 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
           formikHelpers.setFieldError(field, msg);
         });
       } else {
-        toast.error(err.message || "Failed to add note");
+        toast.error(err.message || 'Failed to add note');
       }
     }
   };
 
-
   return (
     <Paper
-      elevation={3}
+      elevation={4}
       sx={{
-        p: 2,
-        width: "100%",
+        p: 3,
         maxWidth: 600,
-        mx: "auto",
-        mt: 20,
-        cursor: expanded ? "default" : "text",
+        mx: 'auto',
+        mt: 23,
       }}
       onClick={() => {
         if (!expanded) setExpanded(true);
       }}
     >
-      <NoteForm initialValues={initialValues}
+      <NoteForm
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         render={(formik) => (
-          <>
-            <Box onClick={() => setExpanded(true)} sx={{ cursor: "text" }}>
+          <form onSubmit={formik.handleSubmit} noValidate>
+            <Box onClick={() => setExpanded(true)} sx={{ cursor: 'text' }}>
               <Collapse in={expanded}>
                 <TextField
                   fullWidth
-                  variant="standard"
-                  id="title"
-                  name="title"
-                  placeholder="Title"
+                  variant='standard'
+                  id='title'
+                  name='title'
+                  placeholder='Title'
                   value={formik.values.title}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -85,13 +83,15 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
 
                 <TextField
                   fullWidth
-                  variant="standard"
-                  id="content"
-                  name="content"
-                  placeholder="Take a note..."
+                  variant='standard'
+                  id='content'
+                  name='content'
+                  placeholder='Take a note...'
                   value={formik.values.content}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  error={formik.touched.content && Boolean(formik.errors.content)}
+                  helperText={formik.touched.content && formik.errors.content}
                   multiline
                   minRows={3}
                   sx={{ mb: 1 }}
@@ -100,40 +100,39 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
 
                 <ColorSelect
                   colors={noteColors}
-                  labelId="color-label"
-                  id="color"
-                  name="color"
+                  labelId='color-label'
+                  id='color'
+                  name='color'
                   value={formik.values.color}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={formik.touched.color && Boolean(formik.errors.color)}
-                  label="Color"
+                  label='Color'
                   sx={{ mb: 1 }}
                 />
               </Collapse>
             </Box>
             {expanded && (
-              <Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
-                <Button type="button" onClick={() => {
-                  formik.resetForm();
-                  setExpanded(false);
-                }}>
+              <Box mt={2} display='flex' justifyContent='flex-end' gap={1}>
+                <Button
+                  type='button'
+                  onClick={() => {
+                    formik.resetForm();
+                    setExpanded(false);
+                  }}
+                >
                   Cancel
                 </Button>
-                <Button variant="contained" type="submit" disabled={formik.isSubmitting}>
+                <Button variant='contained' type='submit' loading={loading}>
                   Add
                 </Button>
               </Box>
             )}
-          </>
+          </form>
         )}
       />
 
-      {!expanded && (
-        <Box sx={{ color: "text.secondary", px: 1 }}>
-          Take a note...
-        </Box>
-      )}
+      {!expanded && <Box sx={{ color: 'text.secondary', px: 1 }}>Take a note...</Box>}
     </Paper>
   );
 };
