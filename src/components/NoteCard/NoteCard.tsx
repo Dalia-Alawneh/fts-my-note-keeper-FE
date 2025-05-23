@@ -14,6 +14,7 @@ import { useState } from 'react';
 import ConfirmDialog from '../Dialogs/ConfirmDeleteDialog';
 import { useDelete } from '@/hooks/useDelete';
 import toast from 'react-hot-toast';
+import { getTextColor } from '@/utils';
 
 const cardStyles =
   (color?: string): SxProps<Theme> =>
@@ -83,14 +84,16 @@ export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCa
           <CardContent>
             <Typography
               gutterBottom
+              color={getTextColor(note.color)}
               pb={1}
               variant='h5'
+              fontWeight={500}
               component='div'
               borderBottom='1px solid grey'
             >
               {note.title}
             </Typography>
-            <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+            <Typography variant='body2' sx={{ color: getTextColor(note.color) }}>
               {note.content}
             </Typography>
           </CardContent>
@@ -109,7 +112,9 @@ export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCa
             <Tooltip title='Created At'>
               <CalendarMonth style={{ cursor: 'pointer' }} color='action' />
             </Tooltip>
-            <Typography variant='body2'>{formatDate(note.createdAt)}</Typography>
+            <Typography variant='body2' color={getTextColor(note.color)}>
+              {formatDate(note.createdAt)}
+            </Typography>
           </Box>
         </Card>
       </Grow>

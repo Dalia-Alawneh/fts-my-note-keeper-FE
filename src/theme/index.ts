@@ -1,8 +1,17 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import './types';
 
-const theme = responsiveFontSizes(
+const commonOptions = {
+  typography: {
+    fontFamily: 'Roboto, sans-serif',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 400,
+    },
+  },
+};
+export const lightTheme = responsiveFontSizes(
   createTheme({
+    ...commonOptions,
     palette: {
       mode: 'light',
       primary: {
@@ -17,13 +26,6 @@ const theme = responsiveFontSizes(
         secondary: '#777B7E',
       },
     },
-    typography: {
-      fontFamily: 'Roboto, sans-serif',
-      h1: {
-        fontSize: '2.5rem',
-        fontWeight: 400,
-      },
-    },
     noteColors: {
       yellow: '#FFF59D',
       pink: '#F48FB1',
@@ -36,4 +38,34 @@ const theme = responsiveFontSizes(
   }),
 );
 
-export default theme;
+export const darkTheme = responsiveFontSizes(
+  createTheme({
+    ...commonOptions,
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#9b8bfe',
+      },
+      secondary: {
+        main: '#212121',
+      },
+      background: {
+        default: '#212121',
+        paper: '#1E1E1E',
+      },
+      text: {
+        primary: '#fff',
+        secondary: '#eee',
+      },
+    },
+    noteColors: {
+      yellow: '#FBC02D',
+      pink: '#F06292',
+      green: '#66BB6A',
+      blue: '#42A5F5',
+      purple: '#AB47BC',
+      orange: '#FFA726',
+      grey: '#BDBDBD',
+    },
+  }),
+);
