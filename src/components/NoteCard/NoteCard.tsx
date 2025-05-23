@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import CustomIconButton from '../IconButton/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { Box, Tooltip } from '@mui/material';
+import { Box, Skeleton, Tooltip } from '@mui/material';
 import { CalendarMonth } from '@mui/icons-material';
 import formatDate from '@/utils/formatDate';
 import type { Note } from '@/types';
@@ -45,13 +45,19 @@ const iconButtonStyles = {
 interface INoteCardProps {
   note: Note;
   refetchNotes: () => Promise<void>;
+  isFetchloading: boolean;
 }
 
-export default function NoteCard({ note, refetchNotes }: INoteCardProps) {
+export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCardProps) {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const { destroy, loading } = useDelete('/notes');
 
+  if (isFetchloading) {
+    return (
+      <Skeleton variant='rectangular' sx={{ borderRadius: '10px' }} width='100%' height={200} />
+    );
+  }
   const handleOpenUpdate = () => setIsUpdateOpen(true);
   const handleCloseUpdate = () => setIsUpdateOpen(false);
 
