@@ -1,7 +1,7 @@
 import type { Note, NoteFormValues, NoteRequestPayload } from '@/types';
 import AppDialog from '../Dialog';
 import NoteForm from '../../NoteForm';
-import ColorSelect from '../../ColorSelect';
+import ColorSelect from '../../Inputs/ColorSelect';
 import { noteColors } from '@/fixtures';
 import { Button, TextField } from '@mui/material';
 

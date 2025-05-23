@@ -1,6 +1,6 @@
 import { Box, Button, Collapse, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
-import ColorSelect from '../ColorSelect';
+import ColorSelect from '../Inputs/ColorSelect';
 import { noteColors } from '@/fixtures';
 import { usePost } from '@/hooks/usePost';
 import type { NoteFormValues, NoteRequestPayload } from '@/types';
