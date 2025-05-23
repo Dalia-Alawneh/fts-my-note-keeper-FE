@@ -1,3 +1,3 @@
-export * from './ConfirmDeleteDialog';
-export * from './UpdateNotesDialog';
+export * from './ConfirmDelete';
+export * from './UpdateNotes';
 export * from './Dialog';
