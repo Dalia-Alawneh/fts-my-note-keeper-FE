@@ -15,7 +15,7 @@ import ConfirmDialog from '../Dialogs/ConfirmDelete';
 import { useDelete } from '@/hooks/useDelete';
 import toast from 'react-hot-toast';
 import { getTextColor } from '@/utils';
-import { usePUT } from '@/hooks/usePut';
+import { usePut } from '@/hooks/usePut';
 
 const cardStyles =
   (color?: string): SxProps<Theme> =>
@@ -54,7 +54,7 @@ export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCa
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const { destroy, loading: isDeleting } = useDelete('/notes');
-  const { put, loading: isUpdating } = usePUT<NoteRequestPayload, NoteResponse>(
+  const { put, loading: isUpdating } = usePut<NoteRequestPayload, NoteResponse>(
     `/notes/${note._id}`,
   );
 
