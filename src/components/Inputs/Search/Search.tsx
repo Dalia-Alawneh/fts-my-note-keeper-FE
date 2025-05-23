@@ -56,13 +56,13 @@ const SearchInput = ({ value, onChange }: ISearchInputProps) => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
+        placeholder='Search…'
         inputProps={{ 'aria-label': 'search' }}
         value={value}
         onChange={onChange}
       />
     </Search>
-  )
-}
+  );
+};
 
-export default SearchInput
+export default SearchInput;
