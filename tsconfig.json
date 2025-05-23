@@ -1,4 +1,15 @@
 {
+  "compilerOptions": {
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "baseUrl": "src",
+    "module": "ESNext",
+    "target": "ES2020",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["*"]
+    }
+  },
+  /* Aliases */
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
