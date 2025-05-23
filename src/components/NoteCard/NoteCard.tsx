@@ -7,7 +7,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 import { Box, Skeleton, Tooltip } from '@mui/material';
 import { CalendarMonth } from '@mui/icons-material';
 import formatDate from '@/utils/formatDate';
-import type { Note } from '@/types';
+import type { Note, NoteRequestPayload, NoteResponse } from '@/types';
 import Grow from '@mui/material/Grow';
 import UpdateNoteDialog from '../Dialogs/UpdateNotes';
 import { useState } from 'react';
@@ -15,6 +15,7 @@ import ConfirmDialog from '../Dialogs/ConfirmDelete';
 import { useDelete } from '@/hooks/useDelete';
 import toast from 'react-hot-toast';
 import { getTextColor } from '@/utils';
+import { usePUT } from '@/hooks/usePut';
 
 const cardStyles =
   (color?: string): SxProps<Theme> =>
@@ -52,7 +53,10 @@ interface INoteCardProps {
 export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCardProps) {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-  const { destroy, loading } = useDelete('/notes');
+  const { destroy, loading: isDeleting } = useDelete('/notes');
+  const { put, loading: isUpdating } = usePUT<NoteRequestPayload, NoteResponse>(
+    `/notes/${note._id}`,
+  );
 
   if (isFetchloading) {
     return (
@@ -65,6 +69,28 @@ export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCa
   const handleOpenDeleteConfirm = () => setIsDeleteConfirmOpen(true);
   const handleCloseDeleteConfirm = () => setIsDeleteConfirmOpen(false);
 
+  const handleUpdateSubmit = async (
+    data: NoteRequestPayload,
+    formikHelpers: { setFieldError: (field: string, message: string) => void },
+  ) => {
+    try {
+      const result = await put(data);
+      if (result) {
+        await refetchNotes();
+        toast.success('Note updated successfully');
+        handleCloseUpdate();
+      }
+    } catch (error) {
+      const err = error as { fieldErrors?: Record<string, string>; message?: string };
+      if (err.fieldErrors) {
+        Object.entries(err.fieldErrors).forEach(([field, msg]) => {
+          formikHelpers.setFieldError(field, msg);
+        });
+      } else {
+        toast.error(err.message || 'Failed to update note');
+      }
+    }
+  };
   const handleDelete = async () => {
     try {
       await destroy(note._id);
@@ -122,13 +148,14 @@ export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCa
         handleClose={handleCloseUpdate}
         note={note}
         open={isUpdateOpen}
-        onNotesUpdate={refetchNotes}
+        handleUpdateSubmit={handleUpdateSubmit}
+        loading={isUpdating}
       />
       <ConfirmDialog
         handleClose={handleCloseDeleteConfirm}
         open={isDeleteConfirmOpen}
         onConfirmDelete={handleDelete}
-        loading={loading}
+        loading={isDeleting}
       />
     </>
   );

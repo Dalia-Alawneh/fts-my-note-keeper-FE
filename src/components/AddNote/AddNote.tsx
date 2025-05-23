@@ -29,9 +29,9 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
     try {
       const result = await post(data);
       if (result) {
-        toast.success('Note added successfully');
         formikHelpers.resetForm();
         await onNoteCreate();
+        toast.success('Note added successfully');
         setExpanded(false);
       }
     } catch (error) {
