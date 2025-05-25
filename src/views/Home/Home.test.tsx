@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import Home from './Home';
 import userEvent from '@testing-library/user-event';
 import { server } from '@/mocks/server';
-import { http } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '@/mocks/apiMocks';
 
 describe('Home page with MSW', () => {
@@ -33,7 +33,7 @@ describe('Home page with MSW', () => {
   it('should show error alert on API failure', async () => {
     server.use(
       http.get(`${BASE_URL}/notes`, () => {
-        return new Response(null, { status: 500 });
+        return HttpResponse.json({ message: 'Internal Server Error' }, { status: 500 });
       }),
     );
 
