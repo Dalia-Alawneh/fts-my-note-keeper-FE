@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { mockNotesResponse } from './data';
+import type { NoteRequestPayload } from '@/types';
 
 export const BASE_URL = 'https://fts-my-note-keeper.onrender.com';
 export const handlers = [
@@ -27,6 +28,23 @@ export const handlers = [
         note: body,
       },
       { status: 200 },
+    );
+  }),
+
+  http.post(`${BASE_URL}/notes/`, async ({ request }) => {
+    const body = (await request.json()) as NoteRequestPayload;
+
+    return HttpResponse.json(
+      {
+        message: 'Note added successfully',
+        note: {
+          ...body,
+          _id: '2',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      },
+      { status: 201 },
     );
   }),
 ];
