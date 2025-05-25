@@ -30,7 +30,7 @@ describe('NoteCard', () => {
     });
   });
 
-  it('opens update dialog on card click', async () => {
+  it('Should opens update dialog on card click', async () => {
     render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isFetchloading={false} />);
     const card = screen.getByText(note.title).closest('div');
     fireEvent.click(card!);
