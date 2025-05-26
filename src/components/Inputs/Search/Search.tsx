@@ -47,16 +47,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 interface ISearchInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  placeholder?: string;
 }
 
-const SearchInput = ({ value, onChange }: ISearchInputProps) => {
+const SearchInput = ({ value, onChange, placeholder }: ISearchInputProps) => {
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder='Search…'
+        placeholder={placeholder ?? 'Search…'}
         inputProps={{ 'aria-label': 'search' }}
         value={value}
         onChange={onChange}
