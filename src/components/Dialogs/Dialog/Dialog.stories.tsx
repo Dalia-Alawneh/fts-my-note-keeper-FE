@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import AppDialog from './Dialog';
 import { Button } from '@mui/material';
 const meta: Meta<typeof AppDialog> = {
+  tags: ['autodocs'],
   title: 'Components/AppDialog',
   component: AppDialog,
   parameters: {
