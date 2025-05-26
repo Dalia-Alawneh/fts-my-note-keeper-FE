@@ -41,7 +41,7 @@ const UpdateNoteDialog = ({
             <form onSubmit={formik.handleSubmit} noValidate>
               <TextField
                 fullWidth
-                id='title'
+                id='update-title'
                 name='title'
                 label='Title'
                 value={formik.values.title}
@@ -78,6 +78,7 @@ const UpdateNoteDialog = ({
               />
               <AppDialog.Actions>
                 <Button
+                  data-testid='update-note'
                   color='primary'
                   variant='contained'
                   fullWidth
