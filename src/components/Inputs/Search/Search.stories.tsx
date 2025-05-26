@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import SearchInput from './Search';
 import { userEvent, within } from '@storybook/test';
 
-const meta = {
+const meta: Meta = {
   title: 'Components/SearchInput',
   component: SearchInput,
   parameters: {
@@ -16,7 +16,7 @@ const meta = {
     value: { control: 'text' },
     onChange: { action: 'changed' },
   },
-} satisfies Meta<typeof SearchInput>;
+};
 
 export default meta;
 

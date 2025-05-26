@@ -47,10 +47,10 @@ const iconButtonStyles = {
 interface INoteCardProps {
   note: Note;
   refetchNotes: () => Promise<void>;
-  isFetchloading: boolean;
+  isLoading: boolean;
 }
 
-export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCardProps) {
+export default function NoteCard({ note, refetchNotes, isLoading }: INoteCardProps) {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const { destroy, loading: isDeleting } = useDelete('/notes');
@@ -58,7 +58,7 @@ export default function NoteCard({ note, refetchNotes, isFetchloading }: INoteCa
     `/notes/${note._id}`,
   );
 
-  if (isFetchloading) {
+  if (isLoading) {
     return (
       <Skeleton variant='rectangular' sx={{ borderRadius: '10px' }} width='100%' height={200} />
     );

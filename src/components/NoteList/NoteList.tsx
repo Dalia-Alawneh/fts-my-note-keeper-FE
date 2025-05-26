@@ -12,7 +12,7 @@ const NoteList = ({ notes, refetchNotes, loading }: INoteListProps) => {
     <Grid container spacing={2} mt={10} display='flex' justifyContent='center'>
       {notes?.map((note) => (
         <Grid key={note._id} size={{ xs: 12, sm: 4 }}>
-          <NoteCard note={note} refetchNotes={refetchNotes} isFetchloading={loading} />
+          <NoteCard note={note} refetchNotes={refetchNotes} isLoading={loading} />
         </Grid>
       ))}
     </Grid>
