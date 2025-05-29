@@ -24,7 +24,13 @@ const ConfirmDeleteDialog = ({
         <Button color='info' variant='outlined' type='button' onClick={handleClose}>
           Cancel
         </Button>
-        <Button color='error' variant='contained' onClick={onConfirmDelete} loading={loading}>
+        <Button
+          data-testid='delete-note'
+          color='error'
+          variant='contained'
+          onClick={onConfirmDelete}
+          loading={loading}
+        >
           Delete
         </Button>
       </AppDialog.Actions>

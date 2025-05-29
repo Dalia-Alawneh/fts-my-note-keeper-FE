@@ -1,54 +1,92 @@
-# React + TypeScript + Vite
+# 📝 Note Keeper - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Deploy on Render](https://img.shields.io/badge/Live%20Demo-%20fts--my--note--keeper--fe.onrender.com-blue)](https://fts-my-note-keeper-fe.onrender.com/)
+[![Chromatic Storybook](https://img.shields.io/badge/Storybook-Chromatic-purple)](https://6834cda5396cc844f7a6be87-ipyqmmfdre.chromatic.com/)
 
-Currently, two official plugins are available:
+A full-stack **Note Keeper** web app that allows users to **create**, **read**, **update**, **delete**, and **search** for notes efficiently. Built using modern front-end tools and practices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Live Demo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🔗 [fts-my-note-keeper-fe.onrender.com](https://fts-my-note-keeper-fe.onrender.com/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+## 🧩 Tech Stack
+
+### 🔷 Frontend
+
+- ⚛️ **React** with **TypeScript**
+- 🖼️ **MUI** (Material UI) for UI components
+- 🧪 **Vitest** for unit testing
+- 📚 **Storybook** for UI component documentation
+- 🚀 **Chromatic** for visual testing and deployment of Storybook
+- ⚡ **Vite** for fast development & build
+
+### 🔗 Backend (API)
+
+Repo: [fts-my-note-keeper (Node.js/Express)](https://github.com/Dalia-Alawneh/fts-my-note-keeper)
+
+---
+
+## ✨ Features
+
+- ✅ Add new notes
+- 📝 Edit existing notes
+- ❌ Delete notes
+- 🔍 Search notes by content/title
+- 🌐 Connected to Node.js backend via REST API
+
+---
+
+## 📦 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Dalia-Alawneh/fts-my-note-keeper-FE.git
+cd fts-my-note-keeper-FE
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+### 3. Run the app locally
+
+```bash
+npm run dev
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run unit tests with Vitest
+npm run test
+```
+
+---
+
+## 🧾 Storybook
+
+```bash
+# Start local Storybook
+npm run storybook
+```
+
+🔗 [View Storybook on Chromatic](https://6834cda5396cc844f7a6be87-ipyqmmfdre.chromatic.com/)
+
+---
+
+## 🧑‍💻 Author
+
+**Dalia Alawneh**
+Front-End Engineer
+🌍 Palestine
+
+🔗 [GitHub](https://github.com/Dalia-Alawneh) | [LinkedIn](https://www.linkedin.com/in/dalia-alawneh/)
