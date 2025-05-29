@@ -4,11 +4,10 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 export function useFetch<T>(endpoint: string, options: RequestInit = {}) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const controllerRef = useRef<AbortController | null>(null);
 
   const fetchData = useCallback(async () => {
-
     const controller = new AbortController();
     controllerRef.current = controller;
     setLoading(true);
