@@ -123,7 +123,7 @@ const AddNote = ({ onNoteCreate }: IAddNoteProps) => {
                 >
                   Cancel
                 </Button>
-                <Button variant='contained' type='submit' loading={loading}>
+                <Button data-testid='add-Note' variant='contained' type='submit' loading={loading}>
                   Add
                 </Button>
               </Box>

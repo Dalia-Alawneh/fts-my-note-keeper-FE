@@ -106,7 +106,7 @@ export default function NoteCard({ note, refetchNotes, isLoading }: INoteCardPro
   return (
     <>
       <Grow in timeout={200} onClick={handleOpenUpdate}>
-        <Card sx={cardStyles(note.color)}>
+        <Card sx={cardStyles(note.color)} data-testid='note-card'>
           <CardContent>
             <Typography
               gutterBottom
@@ -131,6 +131,7 @@ export default function NoteCard({ note, refetchNotes, isLoading }: INoteCardPro
               handleOpenDeleteConfirm();
             }}
             sx={iconButtonStyles}
+            data-testid='delete-icon'
           >
             <DeleteIcon color='error' />
           </CustomIconButton>
