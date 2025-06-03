@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Fetch } from "@/api";
+import { useState } from 'react';
+import { Fetch } from '@/api';
 
-export const usePUT = <T = unknown, R = unknown>(url: string) => {
+export const usePut = <T = unknown, R = unknown>(url: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -11,7 +11,7 @@ export const usePUT = <T = unknown, R = unknown>(url: string) => {
 
     try {
       const response = await Fetch<R>(url, {
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify(body),
       });
       return response;
