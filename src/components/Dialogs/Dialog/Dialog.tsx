@@ -5,12 +5,13 @@ import { type DialogProps } from '@mui/material';
 import DialogTitle from '@mui/material/DialogTitle';
 import { type ReactNode } from 'react';
 
-interface IAppDialogProps extends DialogProps {
+interface IAppDialogProps {
   open: boolean;
   handleClose: () => void;
   children: ReactNode;
+  rest?: Partial<DialogProps>;
 }
-function AppDialogComponent({ open, handleClose, children, ...rest }: IAppDialogProps) {
+function AppDialogComponent({ open, handleClose, children, rest }: IAppDialogProps) {
   return (
     <Dialog open={open} onClose={handleClose} {...rest}>
       {children}

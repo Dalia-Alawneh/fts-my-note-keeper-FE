@@ -10,14 +10,14 @@ const note: Note = mockNotesResponse[0];
 
 describe('NoteCard', () => {
   it('Should renders note details correctly', () => {
-    render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isFetchloading={false} />);
+    render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isLoading={false} />);
 
     expect(screen.getByText(note.title)).toBeInTheDocument();
     expect(screen.getByText(note.content)).toBeInTheDocument();
   });
 
   it('Should opens delete confirmation dialog and deletes note', async () => {
-    render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isFetchloading={false} />);
+    render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isLoading={false} />);
 
     const deleteButton = screen.getByLabelText('delete');
     fireEvent.click(deleteButton);
@@ -31,7 +31,7 @@ describe('NoteCard', () => {
   });
 
   it('Should opens update dialog on card click', async () => {
-    render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isFetchloading={false} />);
+    render(<NoteCard note={note} refetchNotes={mockRefetchNotes} isLoading={false} />);
     const card = screen.getByText(note.title).closest('div');
     fireEvent.click(card!);
     await waitFor(() => {
